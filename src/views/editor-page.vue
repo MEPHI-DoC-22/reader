@@ -1,7 +1,7 @@
 <template>
   <div class="editor-page">
     <div class="constructor-header-toolbar" v-bind:class="[`constructor-header-toolbar_${appMode}`]">
-      <form-header 
+      <form-header
         v-on:toggle-navigation="onToggleNavigation"
         v-on:import="onImport"
         v-on:importWithout="onImportWithout"
@@ -13,7 +13,7 @@
     <div v-if="viewTree.length" class="editor-page__container">
       <div class="wrapper">
         <div class="container">
-          <div 
+          <div
             v-for="(item, index) in viewTree"
             v-bind:id="item.id"
             v-bind:key="item.id"
@@ -97,10 +97,10 @@
                   <div class="p-icon p-icon-arrow-down" />
                 </div>
               </div>
-              
+
               <div class="textarea-element">
                 <div v-if="isDisabled(item.disabled)" v-html="item.value" />
-                <textarea-editor 
+                <textarea-editor
                   v-else
                   v-bind:id="`textarea-${item.id}`"
                   class="textarea-element__edit"
@@ -138,7 +138,7 @@
 
               <div class="textarea-element">
                 <div v-if="isDisabled(item.disabled)" v-html="item.value" />
-                <textarea-editor 
+                <textarea-editor
                   v-else
                   v-bind:id="`textarea-${item.id}`"
                   header
@@ -146,7 +146,7 @@
                   v-bind:value.sync="item.value" />
               </div>
             </div>
-            
+
             <textarea-dropdown
               v-if="isEditMode"
               id="ignore"
@@ -159,7 +159,7 @@
       </div>
     </div>
 
-    <form-navigation 
+    <form-navigation
       v-bind:value.sync="showNavigation"
       v-bind:tree="viewTree" />
 
@@ -255,14 +255,7 @@
       }
     },
     mounted() {
-      const rf = new XMLHttpRequest();
-      rf.open('GET', '/preview.txt', false);
-
-      rf.onreadystatechange = () => {
-        this.onImport(rf.responseText);
-      };
-
-      rf.send(null);
+      this.createTextarea('Импортируйте имеющийся документ или начните создавать новый с добавления блоков <b>«График»</b> или <b>«Текст»</b>.');
     },
     methods: {
       isDisabled(disabled) {
@@ -275,13 +268,13 @@
         var element = document.querySelector('.wrapper');
         var opt = {
           image: { type: 'jpeg', quality: 1 },
-          html2canvas:  { 
-            scale: 2, 
+          html2canvas:  {
+            scale: 2,
             ignoreElements: (item) => {
               if (item.id === 'ignore') {
                 return true;
               }
-            } 
+            }
           },
           pagebreak: { mode: ['avoid-all'] },
           jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
@@ -394,7 +387,7 @@
 
         recalculate.forEach(i => {
           const { values, layout } = this.viewTree[i].value[0];
-          
+
           let value = {
             'xaxis.range[0]': 0,
             'xaxis.range[1]': 0
@@ -473,7 +466,7 @@
 
         recalculate.forEach(i => {
           const { values, layout } = this.viewTree[i].value[0];
-          
+
           let value = {
             'xaxis.range[0]': 0,
             'xaxis.range[1]': 0
